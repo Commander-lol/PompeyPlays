@@ -21,24 +21,6 @@ console.dir(ni);
 reroute.add("/", "/index.html");
 reroute.add("/log", "/chat.html");
 
-http.preListen(function() {
-    var def = q.defer();
-    setTimeout(function() {
-        console.log("WAITED 1500MS");
-        def.resolve(101);
-    }, 1500);
-    return def.promise;
-})
-
-http.postListen(function() {
-    var def = q.defer();
-    setTimeout(function() {
-        console.log("WAITED 1500MS");
-        def.resolve(101);
-    }, 1500);
-    return def.promise;
-})
-
 http.use(reroute.middleware);
 
 http.static(path.join(__dirname, "public"));
