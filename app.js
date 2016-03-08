@@ -25,6 +25,7 @@ const conf = require("./conf");
 console.dir(ni);
 
 reroute.add("/", "/index.html");
+reroute.add("/help", "/help.html");
 reroute.add("/log", "/chat.html");
 
 http.use(reroute.middleware);

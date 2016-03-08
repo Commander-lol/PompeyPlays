@@ -144,6 +144,7 @@
             </g>
         </svg>
         <script src="/ws.lib" type="application/javascript"></script>
+        <script src="/kp.min.js" type="application/javascript"></script>
         <script>
             var socket = new CombiSocket(),
                 keys = [
@@ -160,6 +161,20 @@
                     "select",
                     "start"
                 ],
+                keymap = {
+                  z: "b",
+                  x: "a",
+                  a: "y",
+                  s: "x",
+                  q: "l",
+                  w: "r",
+                  up: "up",
+                  left: "left",
+                  right: "right",
+                  down: "down",
+                  shift: "select",
+                  enter: "start"
+                }
                 sendKey = function(key) {
                     socket.message("input", {key: key});
                 };
@@ -169,7 +184,20 @@
 
             keys.map(function(e) {
                 document.querySelector("#" + e + " .hitbox").addEventListener("click", sendKey.bind(null, e));
-            })
+            });
+
+            var prop,
+                listener = new window.keypress.Listener();
+            for(prop in keymap) {
+              if(keymap.hasOwnProperty(prop)) {
+                  listener.register_combo({
+                    "keys": prop,
+                    "on_keyup": sendKey.bind(null, keymap[prop]),
+                    "prevent_default": true,
+                    "is_solitary": true
+                  });
+                }
+            }
 
         </script>
     </body>
