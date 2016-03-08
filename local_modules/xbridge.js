@@ -20,6 +20,8 @@ var errmap = {
             down: "Down",
             a: "x",
             b: "z",
+            y: "a",
+            x: "s",
             r: "w",
             l: "q",
             select: "Shift_R",

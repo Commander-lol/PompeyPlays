@@ -24,7 +24,7 @@
                 opacity: 0;
                 transition: opacity 0.1s linear;
             }
-            .hitbox:hover {
+            .hitbox:active {
                 opacity: 0.3;
             }
 
@@ -47,14 +47,11 @@
             #b .box {
                 fill: #f0ba24;
             }
-
-            .hitbox {
-                fill: black;
-                opacity: 0;
-                transition: opacity 0.1s linear;
+            #y .box {
+                fill: #11ff33;
             }
-            .hitbox:hover {
-                opacity: 0.3;
+            #x .box {
+                fill: #1133ff;
             }
             svg {
                 position: absolute;
@@ -66,8 +63,8 @@
         </style>
     </head>
     <body>
-        <svg viewbox="0, 0, 500, 350">
-            <g class="group arrows" transform="translate(10,0)">
+        <svg viewbox="0, 0, 700, 350">
+            <g class="group arrows" transform="translate(110,0)">
                 <g class="button" id="left"  transform="translate(0,60)">
                     <path class="box" d="M 50,0 L 0,50 L 50,100 L 100,50 Z" />
                     <path class="arrow" d="M 50,10 L 60,20 L 30,50 L 60,80 L 50,90 L 10,50 Z" />
@@ -93,21 +90,46 @@
                 </g>
             </g>
 
-            <g class="group letters" transform="translate(260,0)">
-                <g class="button" id="a"  transform="translate(60,120)">
+            <g class="group shoulders" transform="translate(100, 0)">
+                <g class="button" id="l"  transform="translate(-100,0)">
+                    <rect class="box" x="1" y="30" width="98" height="40" rx="15" ry="15"/>
+                    <text x="50" y="50" dy="7">L</text>
+                    <rect class="hitbox" x="1" y="30" width="98" height="40" rx="15" ry="15"/>
+                </g>
+                <g class="button" id="r"  transform="translate(500,0)">
+                    <rect class="box" x="1" y="30" width="98" height="40" rx="15" ry="15"/>
+                    <text x="50" y="50" dy="7">R</text>
+                    <rect class="hitbox" x="1" y="30" width="98" height="40" rx="15" ry="15"/>
+                </g>
+            </g>
+
+            <g class="group letters" transform="translate(360,0)">
+                <g class="button" id="a"  transform="translate(120,60)">
                     <circle class="box" r="35" cx="50" cy="50"/>
                     <text x="50" y="50" dy="7">A</text>
                     <circle class="hitbox" r="35" cx="50" cy="50"/>
                 </g>
 
-                <g class="button" id="b"  transform="translate(120,60)">
+                <g class="button" id="b"  transform="translate(60,120)">
                     <circle class="box" r="35" cx="50" cy="50"/>
                     <text x="50" y="50" dy="7">B</text>
                     <circle class="hitbox" r="35" cx="50" cy="50"/>
                 </g>
+
+                <g class="button" id="y"  transform="translate(0,60)">
+                    <circle class="box" r="35" cx="50" cy="50"/>
+                    <text x="50" y="50" dy="7">Y</text>
+                    <circle class="hitbox" r="35" cx="50" cy="50"/>
+                </g>
+
+                <g class="button" id="x"  transform="translate(60,0)">
+                    <circle class="box" r="35" cx="50" cy="50"/>
+                    <text x="50" y="50" dy="7">X</text>
+                    <circle class="hitbox" r="35" cx="50" cy="50"/>
+                </g>
             </g>
 
-            <g class="group commands" transform="translate(135,250)">
+            <g class="group commands" transform="translate(235,250)">
                 <g class="button" id="select"  transform="translate(0,0)">
                     <rect class="box" x="1" y="30" width="98" height="40" rx="25" ry="25"/>
                     <text x="50" y="50" dy="7">SELECT</text>
@@ -127,6 +149,10 @@
                 keys = [
                     "a",
                     "b",
+                    "y",
+                    "x",
+                    "l",
+                    "r",
                     "left",
                     "right",
                     "up",

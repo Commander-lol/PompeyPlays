@@ -1,3 +1,4 @@
+"use strict";
 var exec = require("child_process").exec,
     level = require("levelup"),
     http = require("combi-server")({
@@ -9,12 +10,17 @@ var exec = require("child_process").exec,
             lib: true
         }
     }),
+    Form = require("formidable"),
     q = require("q"),
     reroute = require("./local_modules/reroute"),
     path = require("path"),
     x = require("./local_modules/xbridge"),
+    Route = require("combi-server-router"),
 
-    ni = require("os").networkInterfaces()["eth0"].reduce(function(p, c){if(c.family == "IPv4"){return c;}else{return p;}}, null);
+    router = new Route.Router(),
+    ni = require("os").networkInterfaces();
+
+const conf = require("./conf");
 
 console.dir(ni);
 
@@ -22,8 +28,30 @@ reroute.add("/", "/index.html");
 reroute.add("/log", "/chat.html");
 
 http.use(reroute.middleware);
+http.use((req, res, next) => {
+  let def = q.defer();
+  if(req.method.toLowerCase() == "post") {
+    let form = new Form.IncomingForm();
+    form.parse(req, (err, fields, files) => {
+      if(err) {
+        def.reject(err);
+      }
+      req.body = fields;
+      def.resolve(next());
+    });
+  } else {
+    def.resolve(next());
+  }
+  return def.promise;
+});
 
 http.static(path.join(__dirname, "public"));
+
+// router.post("/token", (req, res) => {
+//
+// });
+
+http.use(Route.middleware(router));
 
 http.ws.do("input:json", function(conn, data) {
     x.do(data.key)
@@ -45,5 +73,7 @@ http.ws.do("input:json", function(conn, data) {
         })
     });
 })
+
+
 
 http.listen();
